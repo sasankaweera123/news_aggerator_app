@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol NewsFilterStrategy {
+    func filter(_ articles: [NewsArticle]) -> [NewsArticle]
+}

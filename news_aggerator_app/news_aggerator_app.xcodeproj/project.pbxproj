@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DCF1FF8C2DB3620000251107 /* Bookmark+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF1FF8A2DB3620000251107 /* Bookmark+CoreDataClass.swift */; };
+		DCF1FF8D2DB3620000251107 /* Bookmark+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF1FF8B2DB3620000251107 /* Bookmark+CoreDataProperties.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DC9E91162DAED27600E7548D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		DC9E91082DAED27400E7548D /* news_aggerator_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = news_aggerator_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9E91152DAED27600E7548D /* news_aggerator_appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = news_aggerator_appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9E911F2DAED27600E7548D /* news_aggerator_appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = news_aggerator_appUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCF1FF8A2DB3620000251107 /* Bookmark+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bookmark+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DCF1FF8B2DB3620000251107 /* Bookmark+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bookmark+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +82,8 @@
 		DC9E90FF2DAED27400E7548D = {
 			isa = PBXGroup;
 			children = (
+				DCF1FF8A2DB3620000251107 /* Bookmark+CoreDataClass.swift */,
+				DCF1FF8B2DB3620000251107 /* Bookmark+CoreDataProperties.swift */,
 				DC9E910A2DAED27400E7548D /* news_aggerator_app */,
 				DC9E91182DAED27600E7548D /* news_aggerator_appTests */,
 				DC9E91222DAED27600E7548D /* news_aggerator_appUITests */,
@@ -236,6 +245,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF1FF8C2DB3620000251107 /* Bookmark+CoreDataClass.swift in Sources */,
+				DCF1FF8D2DB3620000251107 /* Bookmark+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

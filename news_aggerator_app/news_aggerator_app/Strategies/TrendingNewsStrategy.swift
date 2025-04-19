@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class TrendingNewsStrategy: NewsFilterStrategy {
+    func filter(_ articles: [NewsArticle]) -> [NewsArticle] {
+        return articles.shuffled()
+    }
+}
