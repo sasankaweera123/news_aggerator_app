@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct _LoadingView: View {
+struct LoadingView: View {
     var body: some View {
         VStack {
             ProgressView()
@@ -18,5 +18,5 @@ struct _LoadingView: View {
 }
 
 #Preview {
-    _LoadingView()
+    LoadingView()
 }
