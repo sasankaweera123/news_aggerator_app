@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct BookmarksView: View {
+    @StateObject private var viewModel = BookmarksViewModel()
+
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(1...5, id: \.self) { _ in
-                    NavigationLink(destination: FullArticleView()) {
-                        ArticleRowView()
-                    }
-                }
+        List(viewModel.bookmarkedArticles) { article in
+            NavigationLink(destination: ArticleDetailView(article: article)) {
+                ArticleRowView(article: article)
             }
-            .navigationTitle("Bookmarks")
+        }
+        .navigationTitle("Bookmarks")
+        .onAppear {
+            viewModel.loadBookmarks()
         }
     }
 }

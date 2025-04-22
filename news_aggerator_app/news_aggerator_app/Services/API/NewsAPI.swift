@@ -8,7 +8,7 @@
 import Foundation
 
 class NewsAPI {
-    private let apiKey = "YOUR_API_KEY"
+    private let apiKey = "d9d2470dd80643a287f9256f0ffec146"
     private let baseURL = "https://newsapi.org/v2"
 
     func fetchTopHeadlines(
@@ -113,6 +113,8 @@ class NewsAPI {
             completion(.failure(.invalidResponse))
             return
         }
+        
+        print("🌐 Requesting URL: \(url.absoluteString)")
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(.network(error)))
@@ -122,6 +124,7 @@ class NewsAPI {
                 completion(.failure(.invalidResponse))
                 return
             }
+            print(String(data: data, encoding: .utf8) ?? "Unable to decode raw data")
             if let apiError = try? JSONDecoder().decode(NewsAPIErrorResponse.self, from: data), apiError.status == "error" {
                 if apiError.code == "apiKeyMissing" {
                     completion(.failure(.apiKeyMissing))
@@ -132,10 +135,29 @@ class NewsAPI {
             }
             do {
                 let decoded = try JSONDecoder().decode(NewsAPIResponse.self, from: data)
+                print("✅ Decoded \(decoded.articles.count) articles")
                 completion(.success(decoded.articles))
             } catch {
+                print("❌ Decode error: \(error.localizedDescription)")
+                
+                if let decodingError = error as? DecodingError {
+                    switch decodingError {
+                    case .typeMismatch(let type, let context):
+                        print("🔍 Type mismatch: \(type), \(context.debugDescription)")
+                    case .keyNotFound(let key, let context):
+                        print("🔍 Missing key: \(key), \(context.debugDescription)")
+                    case .valueNotFound(let type, let context):
+                        print("🔍 Value not found: \(type), \(context.debugDescription)")
+                    case .dataCorrupted(let context):
+                        print("🔍 Corrupted data: \(context.debugDescription)")
+                    @unknown default:
+                        print("🔍 Unknown decoding error")
+                    }
+                }
+
                 completion(.failure(.decodingFailed))
             }
+
         }.resume()
     }
 }

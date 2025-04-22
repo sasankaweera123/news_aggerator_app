@@ -8,29 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab = 0
+    var body: some View {
+        TabView {
+            NavigationView {
+                NewsFeedView()
+            }
+            .tabItem {
+                Label("Headlines", systemImage: "newspaper")
+            }
 
-        var body: some View {
-            TabView(selection: $selectedTab) {
-                TopHeadlinesView()
-                    .tabItem {
-                        Label("Home", systemImage: "newspaper")
-                    }
-                    .tag(0)
-
-                SearchView()
-                    .tabItem {
-                        Label("Search", systemImage: "magnifyingglass")
-                    }
-                    .tag(1)
-
+            NavigationView {
                 BookmarksView()
-                    .tabItem {
-                        Label("Bookmarks", systemImage: "bookmark.fill")
-                    }
-                    .tag(2)
+            }
+            .tabItem {
+                Label("Bookmarks", systemImage: "bookmark")
             }
         }
+    }
 }
 
 #Preview {

@@ -7,21 +7,23 @@
 
 import SwiftUI
 
-struct TopHeadlinesView: View {
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(1...10, id: \.self) { _ in
-                    NavigationLink(destination: FullArticleView()) {
-                        ArticleRowView()
-                    }
-                }
-            }
-            .navigationTitle("Top Headlines")
-        }
-    }
-}
-
-#Preview {
-    TopHeadlinesView()
-}
+/*
+ struct TopHeadlinesView: View {
+ var body: some View {
+ NavigationView {
+ List {
+ ForEach(1...10, id: \.self) { _ in
+ NavigationLink(destination: FullArticleView()) {
+ ArticleRowView()
+ }
+ }
+ }
+ .navigationTitle("Top Headlines")
+ }
+ }
+ }
+ 
+ #Preview {
+ TopHeadlinesView()
+ }
+ */

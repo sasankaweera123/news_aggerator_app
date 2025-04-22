@@ -8,15 +8,55 @@
 import SwiftUI
 
 struct ArticleRowView: View {
+    let article: NewsArticle
+
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Article Title").font(.headline)
-            Text("Short description...").font(.subheadline)
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(article.title)
+                    .font(.headline)
+                    .lineLimit(2)
+
+                if let desc = article.description {
+                    Text(desc)
+                        .font(.subheadline)
+                        .lineLimit(2)
+                        .foregroundColor(.gray)
+                }
+
+                Text(article.source.name)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            if let urlStr = article.urlToImage, let url = URL(string: urlStr) {
+                AsyncImage(url: url) { image in
+                    image.resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 80, height: 80)
+                        .clipped()
+                } placeholder: {
+                    Color.gray.frame(width: 80, height: 80)
+                }
+            }
         }
-        .padding()
+        .padding(.vertical, 8)
     }
 }
 
-#Preview {
-    ArticleRowView()
-}
+/*
+ #Preview {
+ ArticleRowView(article: NewsArticle(
+ title: "Sample News Headline",
+ description: "This is a brief summary of the article.",
+ url: "https://example.com",
+ urlToImage: "https://via.placeholder.com/150",
+ publishedAt: "2025-04-19T03:00:00Z",
+ content: "Full content of the article goes here..."
+ ))
+ .previewLayout(.sizeThatFits)
+ .padding()
+ }
+ */

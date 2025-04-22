@@ -6,3 +6,20 @@
 //
 
 import Foundation
+
+import Foundation
+
+class BookmarksViewModel: ObservableObject {
+    private let dao = CoreDataDAO()
+
+    @Published var bookmarkedArticles: [NewsArticle] = []
+
+    func loadBookmarks() {
+        bookmarkedArticles = dao.fetchBookmarks()
+    }
+
+    func removeBookmark(id: UUID) {
+        dao.deleteBookmark(id: id)
+        loadBookmarks()
+    }
+}

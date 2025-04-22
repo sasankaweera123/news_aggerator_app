@@ -19,6 +19,7 @@ class CoreDataDAO {
         bookmark.url = article.url
         bookmark.urlToImage = article.urlToImage
         bookmark.publishedAt = article.publishedAt
+        bookmark.sourceName = article.source.name
         try? context.save()
     }
 
@@ -33,7 +34,8 @@ class CoreDataDAO {
                 url: $0.url ?? "",
                 urlToImage: $0.urlToImage,
                 publishedAt: $0.publishedAt ?? "",
-                content: nil
+                content: nil,
+                source: NewsArticle.Source(id: nil, name: $0.sourceName ?? "Unknown")
             )
         }
     }
