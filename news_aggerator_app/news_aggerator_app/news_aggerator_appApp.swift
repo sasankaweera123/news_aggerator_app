@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct news_aggerator_appApp: App {
+    @StateObject var bookmarksViewModel = BookmarksViewModel()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+            .environmentObject(bookmarksViewModel)
         }
     }
 }

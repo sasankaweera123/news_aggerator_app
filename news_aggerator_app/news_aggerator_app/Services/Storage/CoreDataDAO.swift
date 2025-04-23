@@ -10,7 +10,7 @@ import CoreData
 
 class CoreDataDAO {
     private let context = PersistenceController.shared.container.viewContext
-
+    
     func saveBookmark(article: NewsArticle) {
         let bookmark = Bookmark(context: context)
         bookmark.id = article.id
@@ -22,7 +22,7 @@ class CoreDataDAO {
         bookmark.sourceName = article.source.name
         try? context.save()
     }
-
+    
     func fetchBookmarks() -> [NewsArticle] {
         let request: NSFetchRequest<Bookmark> = Bookmark.fetchRequest()
         guard let results = try? context.fetch(request) else { return [] }
@@ -39,13 +39,26 @@ class CoreDataDAO {
             )
         }
     }
-
+    
     func deleteBookmark(id: UUID) {
         let request: NSFetchRequest<Bookmark> = Bookmark.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         if let result = try? context.fetch(request).first {
             context.delete(result)
             try? context.save()
+        }
+    }
+    
+    func isArticleBookmarked(article: NewsArticle) -> Bool {
+        let request: NSFetchRequest<Bookmark> = Bookmark.fetchRequest()
+        request.predicate = NSPredicate(format: "url == %@", article.url) // Check by URL
+        
+        do {
+            let count = try context.count(for: request)
+            return count > 0
+        } catch {
+            print("Error checking bookmark status: \(error)")
+            return false
         }
     }
 }

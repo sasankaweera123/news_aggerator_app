@@ -14,9 +14,16 @@ struct ContentView: View {
                 NewsFeedView()
             }
             .tabItem {
-                Label("Headlines", systemImage: "newspaper")
+                Label("Home", systemImage: "newspaper")
             }
-
+            
+            NavigationView {
+                SearchView()
+            }
+            .tabItem {
+                Label("Search", systemImage: "magnifyingglass")
+            }
+            
             NavigationView {
                 BookmarksView()
             }

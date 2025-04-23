@@ -13,7 +13,11 @@ class BookmarksViewModel: ObservableObject {
     private let dao = CoreDataDAO()
 
     @Published var bookmarkedArticles: [NewsArticle] = []
-
+    
+    init() {
+            loadBookmarks()
+        }
+    
     func loadBookmarks() {
         bookmarkedArticles = dao.fetchBookmarks()
     }
