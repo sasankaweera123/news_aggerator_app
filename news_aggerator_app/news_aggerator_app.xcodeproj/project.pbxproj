@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC296A542DBE227100FC0D61 /* UserAccount+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC296A532DBE227100FC0D61 /* UserAccount+CoreDataProperties.swift */; };
+		DC296A552DBE227100FC0D61 /* UserAccount+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC296A522DBE227100FC0D61 /* UserAccount+CoreDataClass.swift */; };
 		DCF1FF8C2DB3620000251107 /* Bookmark+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF1FF8A2DB3620000251107 /* Bookmark+CoreDataClass.swift */; };
 		DCF1FF8D2DB3620000251107 /* Bookmark+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF1FF8B2DB3620000251107 /* Bookmark+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
@@ -29,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC296A522DBE227100FC0D61 /* UserAccount+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAccount+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DC296A532DBE227100FC0D61 /* UserAccount+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAccount+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DC9E91082DAED27400E7548D /* news_aggerator_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = news_aggerator_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9E91152DAED27600E7548D /* news_aggerator_appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = news_aggerator_appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9E911F2DAED27600E7548D /* news_aggerator_appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = news_aggerator_appUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +86,8 @@
 		DC9E90FF2DAED27400E7548D = {
 			isa = PBXGroup;
 			children = (
+				DC296A522DBE227100FC0D61 /* UserAccount+CoreDataClass.swift */,
+				DC296A532DBE227100FC0D61 /* UserAccount+CoreDataProperties.swift */,
 				DCF1FF8A2DB3620000251107 /* Bookmark+CoreDataClass.swift */,
 				DCF1FF8B2DB3620000251107 /* Bookmark+CoreDataProperties.swift */,
 				DC9E910A2DAED27400E7548D /* news_aggerator_app */,
@@ -247,6 +253,8 @@
 			files = (
 				DCF1FF8C2DB3620000251107 /* Bookmark+CoreDataClass.swift in Sources */,
 				DCF1FF8D2DB3620000251107 /* Bookmark+CoreDataProperties.swift in Sources */,
+				DC296A542DBE227100FC0D61 /* UserAccount+CoreDataProperties.swift in Sources */,
+				DC296A552DBE227100FC0D61 /* UserAccount+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

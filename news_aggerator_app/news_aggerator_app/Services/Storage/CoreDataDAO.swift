@@ -61,4 +61,37 @@ class CoreDataDAO {
             return false
         }
     }
+    
+    // Save registered user
+    func saveUser(username: String, email: String, password: String) {
+        let user = UserAccount(context: context)
+        user.id = UUID()
+        user.username = username
+        user.email = email
+        user.password = password
+        saveContext()
+    }
+    
+    // Fetch user by email
+    func fetchUser(byEmail email: String) -> UserAccount? {
+        let request: NSFetchRequest<UserAccount> = UserAccount.fetchRequest()
+        request.predicate = NSPredicate(format: "email == %@", email)
+        return (try? context.fetch(request))?.first
+    }
+    
+    // Verify login
+    func verifyLogin(email: String, password: String) -> Bool {
+        guard let user = fetchUser(byEmail: email) else { return false }
+        return user.password == password
+    }
+    
+    private func saveContext() {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print("Failed to save Core Data context: \(error.localizedDescription)")
+            }
+        }
+    }
 }
