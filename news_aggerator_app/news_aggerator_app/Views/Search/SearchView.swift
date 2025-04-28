@@ -39,7 +39,7 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search News", text: $viewModel.searchText)
+                TextField("Search Here", text: $viewModel.searchText)
                     .padding(7)
                     .padding(.horizontal, 25)
                     .background(Color(.systemGray6))
@@ -64,33 +64,71 @@ struct SearchView: View {
                         .padding(.horizontal, 4)
                     )
                     .padding(.horizontal)
+                    .onSubmit {
+                        viewModel.search(query: viewModel.searchText)
+                    }
 
                 if viewModel.isLoading {
                     ProgressView("Searching...")
                 } else if let error = viewModel.error {
                     Text("Error: \(error.localizedDescription)")
                         .foregroundColor(.red)
-                } else if viewModel.searchResults.isEmpty {
-                    if !viewModel.searchText.isEmpty {
-                        Text("No results found.")
-                            .foregroundColor(.gray)
+                } else if viewModel.searchResults.isEmpty && viewModel.searchText.isEmpty {
+                    // Display Recent Searches
+                    if !viewModel.recentSearches.isEmpty {
+                        VStack(alignment: .leading) {
+                            Text("Recent Searches")
+                                .font(.headline)
+                                .padding(.leading)
+
+                            ForEach(viewModel.recentSearches, id: \.self) { recentSearch in
+                                Button(action: {
+                                    viewModel.searchText = recentSearch
+                                    viewModel.search(query: recentSearch)
+                                }) {
+                                    HStack {
+                                        Image(systemName: "clock.fill")
+                                            .foregroundColor(.gray)
+                                        Text(recentSearch)
+                                            .foregroundColor(.primary)
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 4)
+                                }
+                            }
+
+                            Button(action: {
+                                viewModel.clearRecentSearches()
+                            }) {
+                                Text("Clear Recent Searches")
+                                    .foregroundColor(.red)
+                                    .padding()
+                            }
+                        }
+                        Spacer()
                     } else {
-                        Text("Enter a search term to find news.")
+                        Text("No recent searches yet.")
                             .foregroundColor(.gray)
+                            .padding()
+                        Spacer()
                     }
                 } else {
+                    // Display Search Results
                     List(viewModel.searchResults) { article in
                         NavigationLink(destination: ArticleDetailView(article: article)) {
                             ArticleRowView(article: article)
                         }
                     }
                 }
+
                 Spacer() // Push content to the top
             }
             .navigationTitle("Search")
         }
     }
 }
+
 #Preview {
-SearchView()
+    SearchView()
 }

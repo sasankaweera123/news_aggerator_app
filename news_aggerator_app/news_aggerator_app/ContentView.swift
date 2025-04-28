@@ -16,14 +16,12 @@ struct ContentView: View {
             .tabItem {
                 Label("Home", systemImage: "newspaper")
             }
-            
             NavigationView {
                 SearchView()
             }
             .tabItem {
                 Label("Search", systemImage: "magnifyingglass")
             }
-            
             NavigationView {
                 BookmarksView()
             }
@@ -32,6 +30,7 @@ struct ContentView: View {
             }
         }
     }
+
 }
 
 #Preview {
