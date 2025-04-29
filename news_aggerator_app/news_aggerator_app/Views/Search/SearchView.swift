@@ -39,7 +39,7 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search Here", text: $viewModel.searchText)
+                TextField("Search the newses here", text: $viewModel.searchText)
                     .padding(7)
                     .padding(.horizontal, 25)
                     .background(Color(.systemGray6))
@@ -80,6 +80,7 @@ struct SearchView: View {
                             Text("Recent Searches")
                                 .font(.headline)
                                 .padding(.leading)
+                                .padding(.top,8)
 
                             ForEach(viewModel.recentSearches, id: \.self) { recentSearch in
                                 Button(action: {
@@ -101,10 +102,18 @@ struct SearchView: View {
                             Button(action: {
                                 viewModel.clearRecentSearches()
                             }) {
-                                Text("Clear Recent Searches")
-                                    .foregroundColor(.red)
-                                    .padding()
+                                Text(" X Clear Recent Searches")
+                                    .foregroundColor(.white)
+                                    .padding(7)
+                                    .background(Color.red)
+                                    .cornerRadius(5)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color.white, lineWidth: 1)
+                                    )
                             }
+                            .frame(width: 400)
+                            .frame(maxWidth: .infinity, alignment: .center)
                         }
                         Spacer()
                     } else {
@@ -122,9 +131,16 @@ struct SearchView: View {
                     }
                 }
 
-                Spacer() // Push content to the top
+                //Spacer() // Push content to the top
             }
-            .navigationTitle("Search")
+            .navigationTitle("Search here")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Search here")
+                        .font(.system(size: 24, weight: .bold))                         .foregroundColor(.primary)
+                }
+            }
         }
     }
 }

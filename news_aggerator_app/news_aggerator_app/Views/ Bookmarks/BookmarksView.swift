@@ -28,6 +28,13 @@ struct BookmarksView: View {
                 .onDelete(perform: deleteBookmark)
             }
             .navigationTitle("Bookmarks")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Bookmarks")
+                        .font(.system(size: 24, weight: .bold))                         .foregroundColor(.primary)
+                }
+            }
             .onAppear {
                 viewModel.loadBookmarks()
             }

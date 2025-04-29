@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+/*@main
 struct news_aggerator_appApp: App {
     @StateObject var bookmarksViewModel = BookmarksViewModel()
 
@@ -15,6 +15,25 @@ struct news_aggerator_appApp: App {
         WindowGroup {
             ContentView()
             .environmentObject(bookmarksViewModel)
+        }
+    }
+}*/
+
+@main
+struct news_aggerator_appApp: App {
+    @StateObject var bookmarksViewModel = BookmarksViewModel()
+    @State private var showWelcomeScreen = true // State to track initial page
+
+    var body: some Scene {
+        WindowGroup {
+            if showWelcomeScreen {
+                WelcomeView(onDismiss: {
+                    showWelcomeScreen = false // Navigate to ContentView after dismiss
+                })
+            } else {
+                ContentView()
+                    .environmentObject(bookmarksViewModel)
+            }
         }
     }
 }

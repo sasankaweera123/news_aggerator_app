@@ -116,7 +116,13 @@ struct NewsFeedView: View {
                 .padding(.top, 0) // Removes extra top padding
             }
             .navigationTitle("Top Headlines")
-            .navigationBarTitleDisplayMode(.inline) // Keeps title compact
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Top Headlines")
+                        .font(.system(size: 24, weight: .bold))                         .foregroundColor(.primary) 
+                }
+            }
             .onAppear {
                 viewModel.loadHeadlines()
                 bookmarkViewModel.loadBookmarks() // Load bookmarks on appear
