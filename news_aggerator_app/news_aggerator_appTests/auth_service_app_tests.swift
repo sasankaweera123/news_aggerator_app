@@ -5,21 +5,39 @@
 //  Created by user270598 on 4/27/25.
 //
 import XCTest
+import CoreData
 @testable import news_aggerator_app
 
-final class UserAccount:XCTestCase{
+final class UserAccountTests: XCTestCase {
     var authManager: AuthManager!
-    var dao: CoreDataDAO!
-    
-    override func setUpWithError() throws {
-        authManager = AuthManager()
-        dao = CoreDataDAO()
-    }
-    
-    override func tearDownWithError() throws {
-        authManager = nil
-        dao = nil
-    }
+        var dao: CoreDataDAO!
+        var persistentContainer: NSPersistentContainer!
+
+        override func setUpWithError() throws {
+            try super.setUpWithError()
+            
+            // Setup in-memory Core Data stack
+            persistentContainer = NSPersistentContainer(name: "NewsModel")
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            persistentContainer.persistentStoreDescriptions = [description]
+            
+            persistentContainer.loadPersistentStores { (desc, error) in
+                if let error = error {
+                    fatalError("Failed to load in-memory store: \(error)")
+                }
+            }
+            
+            dao = CoreDataDAO()
+            authManager = AuthManager()
+        }
+
+        override func tearDownWithError() throws {
+            dao = nil
+            authManager = nil
+            persistentContainer = nil
+            try super.tearDownWithError()
+        }
     
     func testSaveAndFetchUser() throws {
         let email = "testuser@example.com"
