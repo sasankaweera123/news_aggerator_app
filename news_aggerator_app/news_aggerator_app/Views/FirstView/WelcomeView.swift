@@ -12,7 +12,7 @@ struct WelcomeView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Image(systemName: "newspaper")
+            Image("AppWelcomeImage")
                 .resizable()
                 .scaledToFit()
                 .frame(height: 100)
