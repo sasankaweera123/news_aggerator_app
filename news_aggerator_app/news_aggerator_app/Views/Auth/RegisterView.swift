@@ -18,12 +18,14 @@ struct RegisterView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
+                    .accessibilityIdentifier("RegisterTitle")
 
                 TextField("Username", text: $viewModel.username)
                     .autocapitalization(.words)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .accessibilityIdentifier("RegisterUsernameField")
 
                 TextField("Email", text: $viewModel.email)
                     .keyboardType(.emailAddress)
@@ -31,20 +33,24 @@ struct RegisterView: View {
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .accessibilityIdentifier("RegisterEmailField")
 
                 SecureField("Password", text: $viewModel.password)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .accessibilityIdentifier("RegisterPasswordField")
 
                 SecureField("Confirm Password", text: $viewModel.confirmPassword)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .accessibilityIdentifier("RegisterConfirmPasswordField")
 
                 if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
+                        .accessibilityIdentifier("RegisterErrorMessage")
                 }
 
                 Button(action: {
@@ -57,7 +63,8 @@ struct RegisterView: View {
                         .background(Color.blue)
                         .cornerRadius(8)
                 }
-                .disabled(false) 
+                .disabled(false)
+                .accessibilityIdentifier("RegisterButton")
 
                 Spacer()
             }
@@ -68,6 +75,7 @@ struct RegisterView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .accessibilityIdentifier("CancelButton")
                 }
             }
             .alert(isPresented: $viewModel.registrationSuccess) {
@@ -75,15 +83,15 @@ struct RegisterView: View {
                     title: Text("Registration Successful"),
                     message: Text("Your account has been created."),
                     dismissButton: .default(Text("OK")) {
-                        dismiss() // Dismiss the register view
-                        // Optionally navigate to login view
+                        dismiss()
                     }
                 )
             }
+            .accessibilityIdentifier("RegisterView")
         }
     }
 }
 
-#Preview {
+#Preview{
     RegisterView()
 }

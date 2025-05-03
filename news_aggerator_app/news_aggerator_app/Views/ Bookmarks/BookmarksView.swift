@@ -17,12 +17,14 @@ struct BookmarksView: View {
                     NavigationLink(destination: ArticleDetailView(article: article)) {
                         ArticleRowView(article: article)
                     }
+                    .accessibilityIdentifier("BookmarkRow_\(article.id)")
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             viewModel.removeBookmark(id: article.id)
                         } label: {
                             Image(systemName: "bookmark.slash.fill")
                         }
+                        .accessibilityIdentifier("RemoveBookmarkButton_\(article.id)")
                     }
                 }
                 .onDelete(perform: deleteBookmark)
@@ -32,7 +34,9 @@ struct BookmarksView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Bookmarks")
-                        .font(.system(size: 24, weight: .bold))                         .foregroundColor(.primary)
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.primary)
+                        .accessibilityIdentifier("BookmarksTitle")
                 }
             }
             .onAppear {
@@ -42,8 +46,10 @@ struct BookmarksView: View {
                 if viewModel.bookmarkedArticles.isEmpty {
                     Text("No bookmarked articles yet.")
                         .foregroundColor(.gray)
+                        .accessibilityIdentifier("NoBookmarksMessage")
                 }
             }
+            .accessibilityIdentifier("BookmarksView")
         }
     }
 

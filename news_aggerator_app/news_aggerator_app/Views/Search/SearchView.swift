@@ -7,32 +7,6 @@
 
 import SwiftUI
 
-/*
- struct SearchView: View {
- @State private var searchQuery = ""
- 
- var body: some View {
- VStack {
- TextField("Search articles...", text: $searchQuery)
- .textFieldStyle(RoundedBorderTextFieldStyle())
- .padding()
- 
- List {
- ForEach(1...5, id: \.self) { _ in
- NavigationLink(destination: FullArticleView()) {
- ArticleRowView()
- }
- }
- }
- }
- }
- }
- 
- #Preview {
- SearchView()
- }
- */
-
 struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
 
@@ -50,6 +24,7 @@ struct SearchView: View {
                                 .foregroundColor(.gray)
                                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                 .padding(.leading, 8)
+                                .accessibilityIdentifier("SearchIcon")
 
                             if !viewModel.searchText.isEmpty {
                                 Button(action: {
@@ -58,6 +33,7 @@ struct SearchView: View {
                                     Image(systemName: "multiply.circle.fill")
                                         .foregroundColor(.gray)
                                         .padding(.trailing, 8)
+                                        .accessibilityIdentifier("ClearSearchButton")
                                 }
                             }
                         }
@@ -67,20 +43,23 @@ struct SearchView: View {
                     .onSubmit {
                         viewModel.search(query: viewModel.searchText)
                     }
+                    .accessibilityIdentifier("SearchTextField")
 
                 if viewModel.isLoading {
                     ProgressView("Searching...")
+                        .accessibilityIdentifier("SearchLoadingIndicator")
                 } else if let error = viewModel.error {
                     Text("Error: \(error.localizedDescription)")
                         .foregroundColor(.red)
+                        .accessibilityIdentifier("SearchErrorMessage")
                 } else if viewModel.searchResults.isEmpty && viewModel.searchText.isEmpty {
-                    // Display Recent Searches
                     if !viewModel.recentSearches.isEmpty {
                         VStack(alignment: .leading) {
                             Text("Recent Searches")
                                 .font(.headline)
                                 .padding(.leading)
-                                .padding(.top,8)
+                                .padding(.top, 8)
+                                .accessibilityIdentifier("RecentSearchesTitle")
 
                             ForEach(viewModel.recentSearches, id: \.self) { recentSearch in
                                 Button(action: {
@@ -97,6 +76,7 @@ struct SearchView: View {
                                     .padding(.horizontal)
                                     .padding(.vertical, 4)
                                 }
+                                .accessibilityIdentifier("RecentSearch_\(recentSearch)")
                             }
 
                             Button(action: {
@@ -114,36 +94,40 @@ struct SearchView: View {
                             }
                             .frame(width: 400)
                             .frame(maxWidth: .infinity, alignment: .center)
+                            .accessibilityIdentifier("ClearRecentSearchesButton")
                         }
                         Spacer()
                     } else {
                         Text("No recent searches yet.")
                             .foregroundColor(.gray)
                             .padding()
+                            .accessibilityIdentifier("NoRecentSearchMessage")
                         Spacer()
                     }
                 } else {
-                    // Display Search Results
                     List(viewModel.searchResults) { article in
                         NavigationLink(destination: ArticleDetailView(article: article)) {
                             ArticleRowView(article: article)
                         }
+                        .accessibilityIdentifier("SearchResult_\(article.id)")
                     }
                 }
-
-                //Spacer() // Push content to the top
             }
             .navigationTitle("Search here")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Search here")
-                        .font(.system(size: 24, weight: .bold))                         .foregroundColor(.primary)
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.primary)
+                        .accessibilityIdentifier("SearchTitle")
                 }
             }
+            .accessibilityIdentifier("SearchView")
         }
     }
 }
+
 
 #Preview {
     SearchView()

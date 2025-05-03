@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
-    @Environment(\.dismiss) var dismiss 
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationView {
@@ -18,6 +18,7 @@ struct LoginView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
+                    .accessibilityIdentifier("LoginTitle")
 
                 TextField("Email", text: $viewModel.email)
                     .keyboardType(.emailAddress)
@@ -25,15 +26,18 @@ struct LoginView: View {
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .accessibilityIdentifier("LoginEmailField")
 
                 SecureField("Password", text: $viewModel.password)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
+                    .accessibilityIdentifier("LoginPasswordField")
 
                 if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
+                        .accessibilityIdentifier("LoginErrorMessage")
                 }
 
                 Button(action: {
@@ -46,12 +50,14 @@ struct LoginView: View {
                         .background(Color.blue)
                         .cornerRadius(8)
                 }
-                .disabled(false) // Remove or set to a correct boolean binding
+                .disabled(false)
+                .accessibilityIdentifier("LoginButton")
 
                 NavigationLink(destination: RegisterView()) {
                     Text("Don't have an account? Register")
                         .foregroundColor(.secondary)
                 }
+                .accessibilityIdentifier("RegisterNavigationLink")
 
                 Spacer()
             }
@@ -62,6 +68,7 @@ struct LoginView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .accessibilityIdentifier("CancelButton")
                 }
             }
             .alert(isPresented: $viewModel.isLoggedIn) {
@@ -69,11 +76,11 @@ struct LoginView: View {
                     title: Text("Login Successful"),
                     message: Text("You have successfully logged in."),
                     dismissButton: .default(Text("OK")) {
-                        dismiss() // Dismiss the login view after successful login
-                        // You might trigger a state change to show the main app content here
+                        dismiss()
                     }
                 )
             }
+            .accessibilityIdentifier("LoginView")
         }
     }
 }

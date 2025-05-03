@@ -4,221 +4,89 @@
 //
 //  Created by user270598 on 4/22/25.
 //
-
+ 
 import SwiftUI
-
-/*struct ArticleDetailView: View {
-    let article: NewsArticle
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                if let urlToImage = article.urlToImage, let url = URL(string: urlToImage) {
-                    AsyncImage(url: url) { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                }
-
-                Text(article.title)
-                    .font(.headline)
-
-                if let desc = article.description {
-                    Text(desc)
-                        .font(.subheadline)
-                }
-
-                if let content = article.content {
-                    Text(content)
-                        .font(.body)
-                }
-
-                Text("Source: \(article.source.name)")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-
-                Link("Read Full Article", destination: URL(string: article.url)!)
-                    .padding(.top)
-            }
-            .padding()
-        }
-        .navigationTitle("Detail")
-    }
-}*/
-
-import CoreData
-
-/*struct ArticleDetailView: View {
-    let article: NewsArticle
-    @StateObject private var bookmarkViewModel = BookmarksViewModel() // To trigger reload
-    let coreDataDAO = CoreDataDAO() // Create an instance
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                if let urlToImage = article.urlToImage, let url = URL(string: urlToImage) {
-                    AsyncImage(url: url) { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                }
-
-                HStack {
-                    Text(article.title)
-                        .font(.headline)
-                    Spacer()
-                    Button {
-                        if coreDataDAO.isArticleBookmarked(article: article) {
-                            // Find the bookmark by URL and delete by ID
-                            if let bookmarkedArticle = bookmarkViewModel.bookmarkedArticles.first(where: { $0.url == article.url }) {
-                                coreDataDAO.deleteBookmark(id: bookmarkedArticle.id)
-                            }
-                        } else {
-                            coreDataDAO.saveBookmark(article: article)
-                        }
-                        bookmarkViewModel.loadBookmarks() // Reload bookmarks in the other tab
-                    } label: {
-                        Image(systemName: coreDataDAO.isArticleBookmarked(article: article) ? "bookmark.fill" : "bookmark")
-                            .font(.title2)
-                    }
-                }
-
-                if let desc = article.description {
-                    Text(desc)
-                        .font(.subheadline)
-                }
-
-                if let content = article.content {
-                    Text(content)
-                        .font(.body)
-                }
-
-                Text("Source: \(article.source.name)")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-
-                Link("Read Full Article", destination: URL(string: article.url)!)
-                    .padding(.top)
-            }
-            .padding()
-        }
-        .navigationTitle("Detail")
-        .toolbar {
-            Button {
-                if coreDataDAO.isArticleBookmarked(article: article) {
-                    // Find the bookmark by URL and delete by ID
-                    if let bookmarkedArticle = bookmarkViewModel.bookmarkedArticles.first(where: { $0.url == article.url }) {
-                        coreDataDAO.deleteBookmark(id: bookmarkedArticle.id)
-                    }
-                } else {
-                    coreDataDAO.saveBookmark(article: article)
-                }
-                bookmarkViewModel.loadBookmarks() // Reload bookmarks in the other tab
-            } label: {
-                Image(systemName: coreDataDAO.isArticleBookmarked(article: article) ? "bookmark.fill" : "bookmark")
-            }
-        }
-    }
-}*/
 
 struct ArticleDetailView: View {
     let article: NewsArticle
-    @StateObject private var bookmarkViewModel = BookmarksViewModel() // To trigger reload
-    let coreDataDAO = CoreDataDAO() // Create an instance
+    @StateObject private var bookmarkViewModel = BookmarksViewModel()
+    private let coreDataDAO = CoreDataDAO()
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text(article.title)
-                        .font(Font.custom("Poppins", size: 22).weight(.bold)) // Title font in Poppins
+                        .font(Font.custom("Poppins", size: 22).weight(.bold))
+                        .accessibilityIdentifier("ArticleTitle_\(article.id)")
+                    
                     Spacer()
+                    
                     Button {
-                        if coreDataDAO.isArticleBookmarked(article: article) {
-                            // Find the bookmark by URL and delete by ID
-                            if let bookmarkedArticle = bookmarkViewModel.bookmarkedArticles.first(where: { $0.url == article.url }) {
-                                coreDataDAO.deleteBookmark(id: bookmarkedArticle.id)
-                            }
-                        } else {
-                            coreDataDAO.saveBookmark(article: article)
-                        }
-                        bookmarkViewModel.loadBookmarks() // Reload bookmarks in the other tab
+                        handleBookmark()
                     } label: {
                         Image(systemName: coreDataDAO.isArticleBookmarked(article: article) ? "bookmark.fill" : "bookmark")
                             .font(.title2)
+                            .accessibilityIdentifier("BookmarkButton_\(article.id)")
                     }
                 }
+                
                 if let urlToImage = article.urlToImage, let url = URL(string: urlToImage) {
                     AsyncImage(url: url) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
-                            .cornerRadius(10) // Adds border radius to the image
+                            .cornerRadius(10)
+                            .accessibilityIdentifier("ArticleImage_\(article.id)")
                     } placeholder: {
                         ProgressView()
+                            .accessibilityIdentifier("LoadingImageIndicator_\(article.id)")
                     }
                 }
 
                 if let desc = article.description {
                     Text(desc)
-                        .font(Font.custom("Poppins", size: 16)) // Description font in Poppins
-                        .multilineTextAlignment(.leading) // Justifies text alignment
+                        .font(Font.custom("Poppins", size: 16))
+                        .multilineTextAlignment(.leading)
+                        .accessibilityIdentifier("ArticleDescription_\(article.id)")
                 }
 
                 if let content = article.content {
                     Text(content)
-                        .font(Font.custom("Poppins", size: 14)) // Content font in Poppins
-                        .multilineTextAlignment(.leading)                 }
+                        .font(Font.custom("Poppins", size: 14))
+                        .multilineTextAlignment(.leading)
+                        .accessibilityIdentifier("ArticleContent_\(article.id)")
+                }
 
-                Spacer(minLength: 20) // Adds space between description/content and source
+                Spacer(minLength: 20)
 
                 Text("Source: \(article.source.name)")
-                    .font(Font.custom("Poppins", size: 12).weight(.bold)) // Bold source font
+                    .font(Font.custom("Poppins", size: 12).weight(.bold))
                     .foregroundColor(.gray)
+                    .accessibilityIdentifier("ArticleSource_\(article.id)")
 
                 Link("Read Full Article", destination: URL(string: article.url)!)
-                    .font(Font.custom("Poppins", size: 16).weight(.semibold)) // Link font in Poppins
-                    .frame(maxWidth: .infinity) // Makes the link span the width of the parent
+                    .font(Font.custom("Poppins", size: 16).weight(.semibold))
+                    .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue) // Background color for button style
-                    .foregroundColor(.white) // Text color for button
-                    .cornerRadius(10) // Rounded corners for button
-                    .padding(.top, 10) // Adds space above the link
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.top, 10)
+                    .accessibilityIdentifier("ReadFullArticleButton_\(article.id)")
             }
             .padding()
+            .accessibilityIdentifier("ArticleDetailView")
         }
-        //.navigationTitle("Detail")
-        /*.toolbar {
-            Button {
-                if coreDataDAO.isArticleBookmarked(article: article) {
-                    // Find the bookmark by URL and delete by ID
-                    if let bookmarkedArticle = bookmarkViewModel.bookmarkedArticles.first(where: { $0.url == article.url }) {
-                        coreDataDAO.deleteBookmark(id: bookmarkedArticle.id)
-                    }
-                } else {
-                    coreDataDAO.saveBookmark(article: article)
-                }
-                bookmarkViewModel.loadBookmarks() // Reload bookmarks in the other tab
-            } label: {
-                Image(systemName: coreDataDAO.isArticleBookmarked(article: article) ? "bookmark.fill" : "bookmark")
+    }
+    
+    private func handleBookmark() {
+        if coreDataDAO.isArticleBookmarked(article: article) {
+            if let bookmarkedArticle = bookmarkViewModel.bookmarkedArticles.first(where: { $0.url == article.url }) {
+                coreDataDAO.deleteBookmark(id: bookmarkedArticle.id)
             }
-        }*/
+        } else {
+            coreDataDAO.saveBookmark(article: article)
+        }
+        bookmarkViewModel.loadBookmarks()
     }
 }
-
-/*
- #Preview {
- ArticleDetailView(article: NewsArticle(
- title: "Quantum Apocalypse Is Coming",
- description: "A quick overview of quantum threats.",
- url: "https://example.com",
- urlToImage: "https://via.placeholder.com/600x300",
- publishedAt: "2025-04-19T01:00:00Z",
- content: "This is a long-form article explaining the impact of quantum computers..."
- ))
- }
- */
- 

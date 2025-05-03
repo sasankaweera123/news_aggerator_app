@@ -2,10 +2,8 @@
 //  WelcomeView.swift
 //  news_aggerator_app
 //
-//  Created by user271739 on 4/29/25.
+//  Created by user271739 on 5/3/25.
 //
-
-import SwiftUI
 
 import SwiftUI
 
@@ -47,4 +45,3 @@ struct WelcomeView: View {
         .background(Color(.systemGray6))
     }
 }
-
