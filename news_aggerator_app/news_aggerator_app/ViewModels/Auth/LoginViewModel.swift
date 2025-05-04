@@ -12,8 +12,9 @@ class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var errorMessage: String?
-    @Published var isLoggedIn = false 
-
+    @Published var isLoggedIn = false
+    @Published var navigateToContentView = false
+    
     private let authManager = AuthManager()
 
     func login() {
@@ -24,6 +25,7 @@ class LoginViewModel: ObservableObject {
 
         if authManager.login(email: email, password: password) {
             isLoggedIn = true
+            navigateToContentView = true
             errorMessage = nil
             print("Login successful for \(email)")
         } else {

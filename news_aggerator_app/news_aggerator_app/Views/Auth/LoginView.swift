@@ -12,7 +12,7 @@ struct LoginView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 Text("Login Here")
                     .font(.largeTitle)
@@ -50,8 +50,8 @@ struct LoginView: View {
                         .background(Color.blue)
                         .cornerRadius(8)
                 }
-                .disabled(false)
                 .accessibilityIdentifier("LoginButton")
+                .disabled(false)
 
                 NavigationLink(destination: RegisterView()) {
                     Text("Don't have an account? Register")
@@ -71,20 +71,12 @@ struct LoginView: View {
                     .accessibilityIdentifier("CancelButton")
                 }
             }
-            .alert(isPresented: $viewModel.isLoggedIn) {
-                Alert(
-                    title: Text("Login Successful"),
-                    message: Text("You have successfully logged in."),
-                    dismissButton: .default(Text("OK")) {
-                        dismiss()
-                    }
-                )
+            .navigationDestination(isPresented: $viewModel.navigateToContentView) {
+                ContentView()
             }
             .accessibilityIdentifier("LoginView")
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
-#Preview {
-    LoginView()
-}
