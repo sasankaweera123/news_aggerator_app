@@ -19,14 +19,14 @@ struct RegisterView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
                     .accessibilityIdentifier("RegisterTitle")
-
+                
                 TextField("Username", text: $viewModel.username)
                     .autocapitalization(.words)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
                     .accessibilityIdentifier("RegisterUsernameField")
-
+                
                 TextField("Email", text: $viewModel.email)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
@@ -34,25 +34,25 @@ struct RegisterView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
                     .accessibilityIdentifier("RegisterEmailField")
-
+                
                 SecureField("Password", text: $viewModel.password)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
                     .accessibilityIdentifier("RegisterPasswordField")
-
+                
                 SecureField("Confirm Password", text: $viewModel.confirmPassword)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
                     .accessibilityIdentifier("RegisterConfirmPasswordField")
-
+                
                 if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
                         .accessibilityIdentifier("RegisterErrorMessage")
                 }
-
+                
                 Button(action: {
                     viewModel.register()
                 }) {
@@ -65,7 +65,7 @@ struct RegisterView: View {
                 }
                 .disabled(false)
                 .accessibilityIdentifier("RegisterButton")
-
+                
                 Spacer()
             }
             .padding()
@@ -89,6 +89,7 @@ struct RegisterView: View {
             }
             .accessibilityIdentifier("RegisterView")
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
