@@ -47,13 +47,27 @@ class NewsAPI {
         components?.queryItems = queryItems
         fetchArticles(from: components, completion: completion)
     }
-
-    func searchArticles(query: String, completion: @escaping (Result<[NewsArticle], NewsAPIError>) -> Void) {
+    
+    func searchArticles(query: String, category: String? = nil, fromDate: String? = nil, toDate: String? = nil, completion: @escaping (Result<[NewsArticle], NewsAPIError>) -> Void) {
         var components = URLComponents(string: "\(baseURL)/everything")
-        components?.queryItems = [
+        var queryItems = [
             URLQueryItem(name: "apiKey", value: apiKey),
             URLQueryItem(name: "q", value: query)
         ]
+
+        if let category = category {
+            queryItems.append(URLQueryItem(name: "category", value: category.lowercased()))
+        }
+
+        if let fromDate = fromDate {
+            queryItems.append(URLQueryItem(name: "from", value: fromDate))
+        }
+
+        if let toDate = toDate {
+            queryItems.append(URLQueryItem(name: "to", value: toDate))
+        }
+
+        components?.queryItems = queryItems
         fetchArticles(from: components, completion: completion)
     }
 

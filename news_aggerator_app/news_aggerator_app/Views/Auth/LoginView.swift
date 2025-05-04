@@ -14,7 +14,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("Login")
+                Text("Login Here")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
