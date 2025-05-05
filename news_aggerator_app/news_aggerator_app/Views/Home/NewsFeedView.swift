@@ -16,7 +16,7 @@ struct NewsFeedView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) { // Reduce unnecessary spacing
+            VStack(spacing: 0) {
                 List {
                     ForEach(viewModel.articles) { article in
                         NavigationLink(destination: ArticleDetailView(article: article)) {
@@ -32,19 +32,19 @@ struct NewsFeedView: View {
                                 } else {
                                     coreDataDAO.saveBookmark(article: article)
                                 }
-                                bookmarkViewModel.loadBookmarks() // Reload bookmarks in the other tab
+                                bookmarkViewModel.loadBookmarks()
                             } label: {
                                 Image(systemName: coreDataDAO.isArticleBookmarked(article: article) ? "bookmark.fill" : "bookmark")
                             }
                             .tint(.accentColor)
                             .accessibilityIdentifier("BookmarkButton_\(article.id)")
                         }
-                        .listRowSeparator(.hidden) // Hides separators for cleaner look
+                        .listRowSeparator(.hidden)
                     }
-                    .listRowBackground(Color.clear) // Removes list row background
+                    .listRowBackground(Color.clear)
                 }
-                .scrollContentBackground(.hidden) // Removes the default background for the List
-                .padding(.top, 0) // Removes extra top padding
+                .scrollContentBackground(.hidden)
+                .padding(.top, 0)
                 .accessibilityIdentifier("NewsFeedList")
             }
             .navigationTitle("Top Headlines")
@@ -59,14 +59,14 @@ struct NewsFeedView: View {
             }
             .onAppear {
                 viewModel.loadHeadlines()
-                bookmarkViewModel.loadBookmarks() // Load bookmarks on appear
+                bookmarkViewModel.loadBookmarks()
             }
             .alert(item: $viewModel.error) { error in
                 Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
             }
             .accessibilityIdentifier("NewsFeedView")
         }
-        .background(Color(.systemBackground)) // Ensures a clean background
+        .background(Color(.systemBackground)) 
     }
 }
 

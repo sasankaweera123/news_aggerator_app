@@ -50,9 +50,9 @@ struct ArticleRowView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(UIColor.systemGray6)) // Light gray background
+                .fill(Color(UIColor.systemGray6))
         )
-        .padding(.vertical, 4) // Spacing between cards)
+        .padding(.vertical, 4) 
         .accessibilityIdentifier("ArticleRow_\(article.id)")
     }
 }

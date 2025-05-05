@@ -20,7 +20,7 @@ struct LoginView: View {
                     .padding(.bottom, 30)
                     .accessibilityIdentifier("LoginTitle")
 
-                TextField("Email", text: $viewModel.email)
+                TextField("Enter your username", text: $viewModel.email)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .padding()
@@ -28,7 +28,7 @@ struct LoginView: View {
                     .cornerRadius(8)
                     .accessibilityIdentifier("LoginEmailField")
 
-                SecureField("Password", text: $viewModel.password)
+                SecureField("Enter your Password", text: $viewModel.password)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(8)

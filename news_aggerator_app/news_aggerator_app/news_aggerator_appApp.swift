@@ -31,7 +31,7 @@ struct news_aggerator_appApp: App {
                     showWelcomeScreen = false // Navigate to ContentView after dismiss
                 })
             } else {
-                ContentView()
+                LoginView()
                     .environmentObject(bookmarksViewModel)
             }
         }
